@@ -1,1 +1,4 @@
 .DS_Strore
+*/obj
+*/bin
+*.vscode
