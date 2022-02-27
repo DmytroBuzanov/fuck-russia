@@ -9,7 +9,7 @@ USE VPN
 run command
 
 for auto ddos
-```./script.sh -a```
+```./sc.sh -a```
 
 for specific site:
-```./script.sh -s https://kremlin.ru```
+```./sc.sh -s https://kremlin.ru```

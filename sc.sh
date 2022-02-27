@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# docker pull alpine/bombardier
-
 ready=false
-$mode="manual"
+$mode="auto"
 
 while [[ "$#" -gt 0 ]]; do
   case $1 in
@@ -25,7 +23,6 @@ if [ $mode == "auto" ]; then
     echo $line;
     docker run alpine/bombardier -c 1000 -d 60s -l "$line" &
   done < targets.txt
-
 fi
 
 echo "done"
