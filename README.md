@@ -6,7 +6,7 @@ USE VPN
 
 # HOW TO USE
 
-inside folder ddos run command
+run command
 
 for auto ddos
 ```./script.sh -a```
