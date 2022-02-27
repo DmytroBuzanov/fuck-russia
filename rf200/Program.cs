@@ -1,27 +1,34 @@
-﻿// Install the C# / .NET helper library from twilio.com/docs/csharp/install
-
-using System;
-using Twilio;
+﻿using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
 
 class Program
 {
-    static void Main(string[] args)
+    private static void SendSms(string to)
     {
-        // Find your Account SID and Auth Token at twilio.com/console
-        // and set the environment variables. See http://twil.io/secure
+        try
+        {
+            var message = MessageResource.Create(
+                body: "Ищи своих знакомых здесь: 200rf.com \nВыходи на митинги против войны, останови путина!",
+                from: new Twilio.Types.PhoneNumber("+19108129574"),
+                to: new Twilio.Types.PhoneNumber(to)
+            );
+            Console.WriteLine(message.Sid);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+    static void Main()
+    {
         string accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
         string authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
 
         TwilioClient.Init(accountSid, authToken);
-
-        var message = MessageResource.Create(
-            body: "Ищи своих знакомых здесь: 200rf.com",
-            from: new Twilio.Types.PhoneNumber("+19108129574"),
-            to: new Twilio.Types.PhoneNumber("+380962893673")
-        );
-
-        Console.WriteLine(message.Sid);
+        var numbers = File.ReadAllLines("./phone-numbers.txt");
+        numbers = numbers.Where(n => n.Length == 12 && n.StartsWith("+7")).Distinct().ToArray();
+        foreach (var to in numbers)
+            SendSms(to);
     }
 }
